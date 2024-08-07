@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Plugin Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        :root {
+            --primary-color: #2f2f2f;  /* Grayish Dark */
+            --secondary-color: #3e3e3e;  /* Slightly lighter Gray */
+            --accent-color: #9462BE;  /* Purple Accent */
+            --background-color: #1f1f1f;  /* Background Gray */
+            --text-color: #e0e0e0;  /* Light Gray Text */
+            --card-background: #3a3a3a;  /* Card Background Gray */
+            --footer-background: #2b2b2b;  /* Footer Gray */
+            --link-hover-color: #9462BE;  /* Purple Accent */
+            --header-border: #9462BE;  /* Purple Accent */
+            --transition-speed: 0.3s;  /* Transition Speed */
+            --background-image: url('path/to/darkmode/background.jpg'); /* Background image for dark mode */
+            --light-background-image: url('path/to/lightmode/background.jpg'); /* Background image for light mode */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            background-image: var(--background-image);
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            transition: background-color var(--transition-speed), color var(--transition-speed), background-image var(--transition-speed);
+            display: flex;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: var(--secondary-color);
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .category-header {
+            background-color: var(--primary-color);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .filter-btn {
+            display: inline-block;
+            margin-right: 5px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            transition: background-color var(--transition-speed), border var(--transition-speed);
+        }
+
+        .filter-btn.active {
+            border: 2px solid #f7fafc;
+        }
+
+        .filter-btn.bg-opacity-50 {
+            background-color: rgba(148, 98, 190, 0.5);
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .p-2 {
+            padding: 0.5rem;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .bg-gray-700 {
+            background-color: #3e3e3e;
+        }
+
+        .bg-gray-800 {
+            background-color: #2f2f2f;
+        }
+
+        .bg-gray-900 {
+            background-color: #1f1f1f;
+        }
+
+        .text-white {
+            color: #e0e0e0;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .space-y-2 > * + * {
+            margin-top: 0.5rem;
+        }
+
+        .space-y-4 > * + * {
+            margin-top: 1rem;
+        }
+
+        .shadow {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hover\:shadow-lg:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .transition {
+            transition: all var(--transition-speed);
+        }
+
+        .hover\:bg-gray-800:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .list-none {
+            list-style: none;
+            padding: 0;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .hover\:bg-gray-700:hover {
+            background-color: var(--primary-color);
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="sidebar bg-gray-800 p-4">
+        <h2 class="text-2xl font-bold mb-4">Categories</h2>
+        <ul id="categoryList" class="list-none space-y-2 mb-6">
+            <!-- Category links will be appended here by JavaScript -->
+        </ul>
+        <h2 class="text-2xl font-bold mb-4">Filters</h2>
+        <div id="filterList" class="space-y-2">
+            <button id="filterDelete" class="filter-btn bg-red-600 hover:bg-red-700">Delete</button>
+            <button id="filterMerge" class="filter-btn bg-green-600 hover:bg-green-700">Merge</button>
+            <button id="filterRewrite" class="filter-btn bg-blue-600 hover:bg-blue-700">Rewrite</button>
+            <button id="filterLeave" class="filter-btn bg-gray-600 hover:bg-gray-700">Leave</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="mb-4">
+            <input type="text" id="searchInput" class="p-2 rounded bg-gray-700 text-white w-full" placeholder="Search classes...">
+        </div>
+        <div id="classList">
+            <!-- Category sections and class items will be appended here by JavaScript -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const categories = [
+                {
+                    category: "General",
+                    classes: [
+                        { name: "UpdateChecker.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java along with some stuff inside SkinManager.java and ClothesPlus.java." },
+                        { name: "PlayerUUIDTrait.java", action: "DELETE", description: "Can be deleted as it was used in the old NPC system." }
+                    ]
+                },
+                {
+                    category: "Commands",
+                    classes: [
+                        { name: "ClothesCommand.java", action: "REWRITE", description: "All the main wear/unwear/clothes commands are set in here." },
+                        { name: "CosmeticsCommand.java", action: "REWRITE", description: "Simple set to add cosmetics on playerhead, it's just an extra feature that can be deleted and re-added later on." },
+                        { name: "CosmeticsTabCompleter.java", action: "REWRITE", description: "Tab completer for cosmetics commands." },
+                        { name: "CosmeticsManager.java", action: "REWRITE", description: "Creates the config for cosmetics + puts restrictions to removing cosmetics from head." },
+                        { name: "DetectorCommand.java", action: "DELETE", description: "Sets player to detecting mode to detect if they shifted to stop movement and allow movement." }
+                    ]
+                },
+                {
+                    category: "GUI",
+                    classes: [
+                        { name: "OutfitsCommand.java", action: "REWRITE", description: "Open the outfits GUI where the player’s outfits are listed." },
+                        { name: "PlayerOutfitManager.java", action: "REWRITE", description: "Handles the player_outfits.yml to add all overlays of the player on it to be able to load it in. Can use JSON instead of YAML for long run with special UUID assigned per outfit, with an inactivity detector to delete data every 40 days." },
+                        { name: "OutfitsGUI.java", action: "REWRITE", description: "" },
+                        { name: "OwnedCommand.java", action: "REWRITE", description: "Command set to check owned overlays GUI." },
+                        { name: "GUIButton.java", action: "REWRITE", description: "Config for GUIs." },
+                        { name: "GUIManager.java", action: "REWRITE", description: "Sets owned overlays on it to show the player what overlays they have permission to." },
+                        { name: "GUIListener.java", action: "REWRITE / MERGE", description: "Calls methods from GUIManager to handle opening the main GUI and executing commands associated with slots." }
+                    ]
+                },
+                {
+                    category: "Overlays",
+                    classes: [
+                        { name: "OverlayCommandExecutor.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online (skindex, etc)." },
+                        { name: "OverlayUploadCommand.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online, this is the actual logic on it that also includes an auto-cutter to cut off skins to set into overlay shapes, e.g. shirts, pants, etc from full skins (skindex, etc)." },
+                        { name: "TemplateTabCompleter.java", action: "REWRITE / MERGE", description: "Tab completer for the commands above." },
+                        { name: "RegenerateColorsCommand.java", action: "DELETE", description: "Generates the overlays with different colors inside their folders, useless in a way." }
+                    ]
+                },
+                {
+                    category: "Sessions",
+                    classes: [
+                        { name: "SessionCommand.java", action: "DELETE", description: "To trigger commands to start the creation session." },
+                        { name: "SlotSectionCommand.java", action: "MERGE / REWRITE", description: "Detects the selected slots to trigger commands such as /clothes wear and etc." },
+                        { name: "StageCommand.java", action: "MERGE / REWRITE", description: "Detects 'stages' in order to change the commands on the slotbars, e.g., /stage 1, /stage 2 to change the SlotSectionCommand.java’s configs." },
+                        { name: "ScreenEffectCommand.java", action: "MERGE", description: "Sends titles/actionbars." },
+                        { name: "CommandState.java", action: "MERGE", description: "Command to roll back on skin changes for mainly creation-session, so when user wants to go back they can perform this command." }
+                    ]
+                },
+                {
+                    category: "Listeners",
+                    classes: [
+                        { name: "PlayerJoinListener.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java." },
+                        { name: "PlayerListener.java", action: "DELETE", description: "Gamemode stuff along with movement restrictions." },
+                        { name: "PlayerQuitListener.java", action: "DELETE", description: "Handles so when player quits/rejoins it stops the /preview." }
+                    ]
+                },
+                {
+                    category: "Miscellaneous",
+                    classes: [
+                        { name: "LanguageManager.java", action: "DELETE", description: "Needs to be fully redone for full updates on the codes as some messages are broken and not compatible with it." },
+                        { name: "SkinManager.java", action: "LEAVE", description: "Needs its own in-depth documentation on what to delete/leave inside, so I’ll add that as commentaries inside the class itself." },
+                        { name: "WardrobeClothesExpansion.java", action: "LEAVE", description: "Has placeholders." }
+                    ]
+                }
+            ];
+
+            const classListElement = document.getElementById('classList');
+            const searchInput = document.getElementById('searchInput');
+            const categoryListElement = document.getElementById('categoryList');
+            const filterButtons = {
+                DELETE: document.getElementById('filterDelete'),
+                MERGE: document.getElementById('filterMerge'),
+                REWRITE: document.getElementById('filterRewrite'),
+                LEAVE: document.getElementById('filterLeave')
+            };
+
+            const actionColors = {
+                DELETE: 'bg-red-600',
+                MERGE: 'bg-green-600',
+                'REWRITE / MERGE': 'bg-indigo-600',
+                REWRITE: 'bg-blue-600',
+                'CLEAN / REDO': 'bg-yellow-600',
+                'RE-ADD / DELETE': 'bg-purple-600',
+                LEAVE: 'bg-gray-600'
+            };
+
+            function renderCategoryList() {
+                categories.forEach(category => {
+                    const categoryLink = document.createElement('li');
+                    categoryLink.innerHTML = `<a href="#${category.category}" class="block p-2 rounded hover:bg-gray-700">${category.category}</a>`;
+                    categoryListElement.appendChild(categoryLink);
+                });
+            }
+
+            function renderClassList(filter = '') {
+                const selectedFilters = Object.keys(filterButtons).filter(key => filterButtons[key].classList.contains('active'));
+                classListElement.innerHTML = '';
+                categories.forEach(category => {
+                    const categorySection = document.createElement('div');
+                    categorySection.classList.add('mb-6');
+                    categorySection.id = category.category;
+
+                    const categoryHeader = document.createElement('h2');
+                    categoryHeader.classList.add('text-2xl', 'font-bold', 'mb-4', 'category-header');
+                    categoryHeader.innerText = category.category;
+
+                    const classItems = category.classes
+                        .filter(item => 
+                            item.name.toLowerCase().includes(filter.toLowerCase()) && 
+                            (selectedFilters.length === 0 || selectedFilters.some(f => item.action.includes(f)))
+                        )
+                        .map(item => {
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('p-4', 'rounded', 'shadow', 'transition', 'hover:shadow-lg', 'hover:bg-gray-800');
+                            listItem.innerHTML = `
+                                <h3 class="text-xl font-semibold">${item.name} <span class="text-sm ${actionColors[item.action.split(' / ')[0]]} px-2 py-1 rounded">${item.action}</span></h3>
+                                <p>${item.description}</p>
+                            `;
+                            return listItem;
+                        });
+
+                    if (classItems.length > 0) {
+                        categorySection.appendChild(categoryHeader);
+                        const ul = document.createElement('ul');
+                        ul.classList.add('list-none', 'space-y-4');
+                        classItems.forEach(classItem => ul.appendChild(classItem));
+                        categorySection.appendChild(ul);
+                        classListElement.appendChild(categorySection);
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', () => {
+                renderClassList(searchInput.value);
+            });
+
+            Object.keys(filterButtons).forEach(key => {
+                filterButtons[key].addEventListener('click', () => {
+                    filterButtons[key].classList.toggle('active');
+                    renderClassList(searchInput.value);
+                });
+            });
+
+            renderCategoryList();
+            renderClassList();
+        });
+    </script>
+</body>
+</html>
