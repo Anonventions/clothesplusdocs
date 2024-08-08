@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClothesPlus Class Documentation</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -163,6 +164,14 @@
             <button id="filterRewrite" class="filter-btn bg-blue-600 hover:bg-blue-700">Rewrite</button>
             <button id="filterLeave" class="filter-btn bg-gray-600 hover:bg-gray-700">Leave</button>
         </div>
+        <h2 class="text-2xl font-bold mb-4">Tag Filters</h2>
+        <div id="tagFilterList" class="space-y-2">
+            <!-- Tag filter buttons will be appended here by JavaScript -->
+        </div>
+        <h2 class="text-2xl font-bold mb-4">Folder Filters</h2>
+        <div id="folderFilterList" class="space-y-2">
+            <!-- Folder filter buttons will be appended here by JavaScript -->
+        </div>
     </div>
     <div class="content">
         <div class="mb-4">
@@ -178,68 +187,68 @@
                 {
                     category: "General",
                     classes: [
-                        { name: "UpdateChecker.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java along with some stuff inside SkinManager.java and ClothesPlus.java." },
-                        { name: "PlayerUUIDTrait.java", action: "DELETE", description: "Can be deleted as it was used in the old NPC system." },
-                        { name: "ClothesPlus.java", action: "REWRITE", description: "Needs full rewrite and clean up as some of the methods inside are already set within other classes." }
+                        { name: "UpdateChecker.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java along with some stuff inside SkinManager.java and ClothesPlus.java.", tags: "info, main", folder: "clothesplus" },
+                        { name: "PlayerUUIDTrait.java", action: "DELETE", description: "Can be deleted as it was used in the old NPC system.", tags: "npcs", folder: "npcs" },
+                        { name: "ClothesPlus.java", action: "REWRITE", description: "Needs full rewrite and clean up as some of the methods inside are already set within other classes.", tags: "main", folder: "clothesplus" }
                     ]
                 },
                 {
                     category: "Commands",
                     classes: [
-                        { name: "ClothesCommand.java", action: "REWRITE", description: "All the main wear/unwear/clothes commands are set in here." },
-                        { name: "CosmeticsCommand.java", action: "REWRITE", description: "Simple set to add cosmetics on playerhead, it's just an extra feature that can be deleted and re-added later on." },
-                        { name: "CosmeticsTabCompleter.java", action: "REWRITE", description: "Tab completer for cosmetics commands." },
-                        { name: "CosmeticsManager.java", action: "REWRITE", description: "Creates the config for cosmetics + puts restrictions to removing cosmetics from head." },
-                        { name: "DetectorCommand.java", action: "DELETE", description: "Sets player to detecting mode to detect if they shifted to stop movement and allow movement." }
+                        { name: "ClothesCommand.java", action: "REWRITE", description: "All the main wear/unwear/clothes commands are set in here.", tags: "commands", folder: "clothesplus" },
+                        { name: "CosmeticsCommand.java", action: "REWRITE", description: "Simple set to add cosmetics on playerhead, it's just an extra feature that can be deleted and re-added later on.", tags: "commands", folder: "player" },
+                        { name: "CosmeticsTabCompleter.java", action: "REWRITE", description: "Tab completer for cosmetics commands.", tags: "utils", folder: "player" },
+                        { name: "CosmeticsManager.java", action: "REWRITE", description: "Creates the config for cosmetics + puts restrictions to removing cosmetics from head.", tags: "utils", folder: "player" },
+                        { name: "DetectorCommand.java", action: "DELETE", description: "Sets player to detecting mode to detect if they shifted to stop movement and allow movement.", tags: "commands", folder: "clothesplus" }
                     ]
                 },
                 {
                     category: "GUI",
                     classes: [
-                        { name: "OutfitsCommand.java", action: "REWRITE", description: "Open the outfits GUI where the player’s outfits are listed." },
-                        { name: "PlayerOutfitManager.java", action: "REWRITE", description: "Handles the player_outfits.yml to add all overlays of the player on it to be able to load it in. Can use JSON instead of YAML for long run with special UUID assigned per outfit, with an inactivity detector to delete data every 40 days." },
-                        { name: "OutfitsGUI.java", action: "REWRITE", description: "" },
-                        { name: "OwnedCommand.java", action: "REWRITE", description: "Command set to check owned overlays GUI." },
-                        { name: "GUIButton.java", action: "REWRITE", description: "Config for GUIs." },
-                        { name: "GUIManager.java", action: "REWRITE", description: "Sets owned overlays on it to show the player what overlays they have permission to." },
-                        { name: "GUIListener.java", action: "REWRITE / MERGE", description: "Calls methods from GUIManager to handle opening the main GUI and executing commands associated with slots." }
+                        { name: "OutfitsCommand.java", action: "REWRITE", description: "Open the outfits GUI where the player’s outfits are listed.", tags: "commands", folder: "player" },
+                        { name: "PlayerOutfitManager.java", action: "REWRITE", description: "Handles the player_outfits.yml to add all overlays of the player on it to be able to load it in. Can use JSON instead of YAML for long run with special UUID assigned per outfit, with an inactivity detector to delete data every 40 days.", tags: "utils", folder: "player" },
+                        { name: "OutfitsGUI.java", action: "REWRITE", description: "", tags: "gui", folder: "player" },
+                        { name: "OwnedCommand.java", action: "REWRITE", description: "Command set to check owned overlays GUI.", tags: "commands", folder: "player" },
+                        { name: "GUIButton.java", action: "REWRITE", description: "Config for GUIs.", tags: "utils", folder: "player" },
+                        { name: "GUIManager.java", action: "REWRITE", description: "Sets owned overlays on it to show the player what overlays they have permission to.", tags: "utils", folder: "player" },
+                        { name: "GUIListener.java", action: "REWRITE / MERGE", description: "Calls methods from GUIManager to handle opening the main GUI and executing commands associated with slots.", tags: "utils", folder: "player" }
                     ]
                 },
                 {
                     category: "Overlays",
                     classes: [
-                        { name: "OverlayCommandExecutor.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online (skindex, etc)." },
-                        { name: "OverlayUploadCommand.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online, this is the actual logic on it that also includes an auto-cutter to cut off skins to set into overlay shapes, e.g. shirts, pants, etc from full skins (skindex, etc)." },
-                        { name: "TemplateTabCompleter.java", action: "REWRITE / MERGE", description: "Tab completer for the commands above." },
-                        { name: "RegenerateColorsCommand.java", action: "DELETE", description: "Generates the overlays with different colors inside their folders, useless in a way." }
+                        { name: "OverlayCommandExecutor.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online (skindex, etc).", tags: "commands", folder: "admin" },
+                        { name: "OverlayUploadCommand.java", action: "REWRITE / MERGE", description: "To upload overlays from URLs online, this is the actual logic on it that also includes an auto-cutter to cut off skins to set into overlay shapes, e.g. shirts, pants, etc from full skins (skindex, etc).", tags: "commands", folder: "admin" },
+                        { name: "TemplateTabCompleter.java", action: "REWRITE / MERGE", description: "Tab completer for the commands above.", tags: "utils", folder: "admin" },
+                        { name: "RegenerateColorsCommand.java", action: "DELETE", description: "Generates the overlays with different colors inside their folders, useless in a way.", tags: "commands", folder: "admin" }
                     ]
                 },
                 {
                     category: "Sessions",
                     classes: [
-                        { name: "SessionCommand.java", action: "DELETE", description: "To trigger commands to start the creation session." },
-                        { name: "SlotSectionCommand.java", action: "MERGE / REWRITE", description: "Detects the selected slots to trigger commands such as /clothes wear and etc." },
-                        { name: "StageCommand.java", action: "MERGE / REWRITE", description: "Detects 'stages' in order to change the commands on the slotbars, e.g., /stage 1, /stage 2 to change the SlotSectionCommand.java’s configs." },
-                        { name: "ScreenEffectCommand.java", action: "MERGE", description: "Sends titles/actionbars." },
-                        { name: "CommandState.java", action: "MERGE", description: "Command to roll back on skin changes for mainly creation-session, so when user wants to go back they can perform this command." },
-                                              { name: "PreviewSkinCommand.java", action: "DELETE", description: "Citizens to zNPCsPlus." }
+                        { name: "SessionCommand.java", action: "DELETE", description: "To trigger commands to start the creation session.", tags: "commands", folder: "creator" },
+                        { name: "SlotSectionCommand.java", action: "MERGE / REWRITE", description: "Detects the selected slots to trigger commands such as /clothes wear and etc.", tags: "commands", folder: "creator" },
+                        { name: "StageCommand.java", action: "MERGE / REWRITE", description: "Detects 'stages' in order to change the commands on the slotbars, e.g., /stage 1, /stage 2 to change the SlotSectionCommand.java’s configs.", tags: "commands", folder: "creator" },
+                        { name: "ScreenEffectCommand.java", action: "MERGE", description: "Sends titles/actionbars.", tags: "commands", folder: "creator" },
+                        { name: "CommandState.java", action: "MERGE", description: "Command to roll back on skin changes for mainly creation-session, so when user wants to go back they can perform this command.", tags: "utils", folder: "creator" },
+                        { name: "PreviewSkinCommand.java", action: "DELETE", description: "Citizens to zNPCsPlus.", tags: "npcs", folder: "npcs" }
                     ]
                 },
                 {
                     category: "Listeners",
                     classes: [
-                        { name: "PlayerJoinListener.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java." },
-                        { name: "PlayerListener.java", action: "DELETE", description: "Gamemode stuff along with movement restrictions." },
-                        { name: "PlayerQuitListener.java", action: "DELETE", description: "Handles so when player quits/rejoins it stops the /preview." }
+                        { name: "PlayerJoinListener.java", action: "DELETE", description: "Can be removed and set in a PluginInfo.java.", tags: "info", folder: "clothesplus" },
+                        { name: "PlayerListener.java", action: "DELETE", description: "Gamemode stuff along with movement restrictions.", tags: "main", folder: "clothesplus" },
+                        { name: "PlayerQuitListener.java", action: "DELETE", description: "Handles so when player quits/rejoins it stops the /preview.", tags: "main", folder: "clothesplus" }
                     ]
                 },
                 {
                     category: "Miscellaneous",
                     classes: [
-                        { name: "LanguageManager.java", action: "DELETE", description: "Needs to be fully redone for full updates on the codes as some messages are broken and not compatible with it." },
-                        { name: "SkinManager.java", action: "LEAVE", description: "Needs its own in-depth documentation on what to delete/leave inside, so I’ll add that as commentaries inside the class itself." },
-                        { name: "WardrobeClothesExpansion.java", action: "LEAVE", description: "Has placeholders." },
-                        { name: "OverlayEffects.java", action: "REWRITE", description: "Doesn't work as it was intended to, intention was to set attributes/effects per overlay through config.yml." }
+                        { name: "LanguageManager.java", action: "DELETE", description: "Needs to be fully redone for full updates on the codes as some messages are broken and not compatible with it.", tags: "main", folder: "clothesplus" },
+                        { name: "SkinManager.java", action: "LEAVE", description: "Needs its own in-depth documentation on what to delete/leave inside, so I’ll add that as commentaries inside the class itself.", tags: "main", folder: "clothesplus" },
+                        { name: "WardrobeClothesExpansion.java", action: "LEAVE", description: "Has placeholders.", tags: "main", folder: "clothesplus" },
+                        { name: "OverlayEffects.java", action: "REWRITE", description: "Doesn't work as it was intended to, intention was to set attributes/effects per overlay through config.yml.", tags: "main", folder: "clothesplus" }
                     ]
                 }
             ];
@@ -253,6 +262,8 @@
                 REWRITE: document.getElementById('filterRewrite'),
                 LEAVE: document.getElementById('filterLeave')
             };
+            const tagFilterList = document.getElementById('tagFilterList');
+            const folderFilterList = document.getElementById('folderFilterList');
 
             const actionColors = {
                 DELETE: 'bg-red-600',
@@ -272,8 +283,35 @@
                 });
             }
 
+            function renderFilterButtons(filterListElement, filters, classPrefix) {
+                filters.forEach(filter => {
+                    const filterButton = document.createElement('button');
+                    filterButton.id = `${classPrefix}${filter}`;
+                    filterButton.className = 'filter-btn bg-gray-600 hover:bg-gray-700';
+                    filterButton.innerText = filter;
+                    filterListElement.appendChild(filterButton);
+
+                    filterButton.addEventListener('click', () => {
+                        filterButton.classList.toggle('active');
+                        renderClassList(searchInput.value);
+                    });
+                });
+            }
+
+            function extractUniqueValuesFromClasses(property) {
+                const values = new Set();
+                categories.forEach(category => {
+                    category.classes.forEach(item => {
+                        item[property].split(', ').forEach(value => values.add(value));
+                    });
+                });
+                return Array.from(values);
+            }
+
             function renderClassList(filter = '') {
                 const selectedFilters = Object.keys(filterButtons).filter(key => filterButtons[key].classList.contains('active'));
+                const selectedTagFilters = Array.from(tagFilterList.getElementsByClassName('active')).map(btn => btn.innerText);
+                const selectedFolderFilters = Array.from(folderFilterList.getElementsByClassName('active')).map(btn => btn.innerText);
                 classListElement.innerHTML = '';
                 categories.forEach(category => {
                     const categorySection = document.createElement('div');
@@ -287,7 +325,9 @@
                     const classItems = category.classes
                         .filter(item => 
                             item.name.toLowerCase().includes(filter.toLowerCase()) && 
-                            (selectedFilters.length === 0 || selectedFilters.some(f => item.action.includes(f)))
+                            (selectedFilters.length === 0 || selectedFilters.some(f => item.action.includes(f))) &&
+                            (selectedTagFilters.length === 0 || selectedTagFilters.some(tag => item.tags.includes(tag))) &&
+                            (selectedFolderFilters.length === 0 || selectedFolderFilters.includes(item.folder))
                         )
                         .map(item => {
                             const listItem = document.createElement('li');
@@ -295,6 +335,8 @@
                             listItem.innerHTML = `
                                 <h3 class="text-xl font-semibold">${item.name} <span class="text-sm ${actionColors[item.action.split(' / ')[0]]} px-2 py-1 rounded">${item.action}</span></h3>
                                 <p>${item.description}</p>
+                                <p><strong>Tags:</strong> ${item.tags}</p>
+                                <p><strong>Folder:</strong> ${item.folder}</p>
                             `;
                             return listItem;
                         });
@@ -320,6 +362,12 @@
                     renderClassList(searchInput.value);
                 });
             });
+
+            const uniqueTags = extractUniqueValuesFromClasses('tags');
+            renderFilterButtons(tagFilterList, uniqueTags, 'tag-');
+
+            const uniqueFolders = extractUniqueValuesFromClasses('folder');
+            renderFilterButtons(folderFilterList, uniqueFolders, 'folder-');
 
             renderCategoryList();
             renderClassList();
